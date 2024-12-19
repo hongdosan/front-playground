@@ -1,0 +1,75 @@
+.a-button {
+  background-color: rgb(77, 77, 77);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-right: 30px;
+  margin-left: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 17px;
+  padding-left: 17px;
+
+  /*
+   * style 변경 시 부드럽게 전환되게 해주는 속성
+   * 즉, 선택자가 변환되는 것에 지연을 줘서 변환시키는 속성
+   * 속성값이 지연 시간이라 보면 된다
+   * 흔히 hover 할 때 사용
+   */
+  transition: opacity 1s;
+  vertical-align: top;
+}
+
+/* 마우스를 해당 요소에 가져갈 때 적용되는 스타일 */
+.a-button:hover {
+  background-color: dodgerblue;
+  opacity: 0.7;
+}
+
+/* 해당 요소를 클릭할 때 적용되는 스타일 */
+.a-button:active {
+  opacity: 0.1;
+}
+
+.b-button {
+  background-color: white;
+  border-color: rgb(212, 7, 74);
+  border-style: solid;
+  border-width: 1px;
+  color: rgb(7, 75, 212);
+  border-radius: 2px;
+  cursor: pointer;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 17px;
+  padding-right: 17px;
+  transition: background-color 3s, color 0.15s;
+}
+
+.b-button:hover {
+  background-color: rgb(7, 77, 212);
+  color: white;
+}
+
+.b-button:active {
+  opacity: 0.7;
+}
+
+.c-button {
+  background-color: rgb(25, 77, 77);
+  color: white;
+  border: none;
+  height: 37px;
+  width: 74px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: all 1s ease-out;
+}
+
+.c-button:hover {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
