@@ -1,10 +1,9 @@
 .container {
-    border: 7px solid lightgray;
+    border: 6px solid lightgray;
     display: flex;
-    flex-direction: row;
-    /* flex-direction: row | row-reverse | column | column-reverse  */
-    flex-wrap: wrap-reverse;
-    /* flex-wrap: nowrap | wrap | wrap-reverse */
+    width: 600px;
+    height: 800px;
+    align-items: flex-end
 }
 
 .flex-item {
@@ -16,16 +15,18 @@
 
 .item-1 {
     background-color: lightblue;
+    align-self: flex-start;
 }
 
 .item-2 {
     background-color: lightyellow;
+    align-self: center;
 }
 
 .item-3 {
     background-color: lightpink;
+    align-self: stretch;
 }
-
 .item-4 {
     background-color: lightgreen;
 }

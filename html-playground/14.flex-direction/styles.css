@@ -1,8 +1,15 @@
-.container {
+.container-1 {
     border: 3px solid lightgray;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: row;
     /* flex-direction: row | row-reverse | column | column-reverse  */
+}
+
+.container-2 {
+  border: 3px solid lightgray;
+  display: flex;
+  flex-direction: column-reverse;
+  /* flex-direction: row | row-reverse | column | column-reverse  */
 }
 
 .flex-item {

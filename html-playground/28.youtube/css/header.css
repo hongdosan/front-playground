@@ -1,0 +1,83 @@
+.header {
+  height: 55px;
+
+  /*
+   * flex : 플렉스 활성화
+   * row : 요소를 가로 -> 방향으로 정렬
+   * space-between : 플렉스 요소들을 가로 방향으로 양끝 분산
+   */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger-menu {
+  height: 24px;
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+.youtube-logo {
+  height: 70px;
+}
+
+.middle-section {
+  flex: 1;
+  margin-left: 70px;
+  margin-right: 35px;
+  max-width: 500px;
+}
+
+.search-button {
+  height: 40px;
+  width: 66px;
+  background-color: #323232;
+  border: 1px solid #4D4D4D;
+
+  /* padding 과 다르게 margin 음수 가능 */
+  margin-left: -1px;
+  margin-right: 10px;
+}
+
+.search-icon {
+  height: 25px;
+}
+
+.voice-search-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.voice-search-icon {
+  height: 24px;
+}
+
+.upload-icon {
+  height: 24px;
+}
+
+.youtube-apps-icon {
+  height: 24px;
+}
+
+.notifications-icon {
+  height: 24px;
+}
+
+.current-user-picture {
+  height: 32px;
+  border-radius: 16px;
+}

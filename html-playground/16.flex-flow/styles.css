@@ -1,13 +1,13 @@
 .container {
-    border: 6px solid lightgray;
+    border: 77px solid lightgray;
     display: flex;
     flex-flow: row-reverse wrap;
 }
 
 .flex-item {
     color: black;
-    font-size: 2rem;
-    padding: 1rem;
+    font-size: 4rem;
+    padding: 4rem;
     text-align: center;
 }
 
