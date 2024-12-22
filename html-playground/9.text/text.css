@@ -1,0 +1,16 @@
+.a-text {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+
+    font-style: italic;
+    text-align: center;
+    line-height: 37px;
+
+    text-decoration: underline;
+    /*text-decoration: none;*/
+}
+
+.b-span-text {
+    text-decoration: underline;
+}
