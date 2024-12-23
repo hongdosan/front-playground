@@ -19,9 +19,9 @@ container.addEventListener('mousemove', handleEvent);
 
 // Event Handler
 function handleEvent(e) {
-    e.preventDefault();
-    console.log(`EVENT TYPE: ${e.type}`);
-    title.textContent= `MouseX: ${e.offsetX} MouseY: ${e.offsetY}`;
+  e.preventDefault();
+  console.log(`EVENT TYPE: ${e.type}`);
+  title.textContent = `MouseX: ${e.offsetX} MouseY: ${e.offsetY}`;
 }
 
 // FORM EVENT
@@ -52,12 +52,12 @@ emailInput.addEventListener('paste', handleEvent);
 emailInput.addEventListener('input', handleEvent);
 
 function handleEvent(e) {
-    console.log(`EVENT TYPE: ${e.type}`);
+  console.log(`EVENT TYPE: ${e.type}`);
 
-    if (e.type === 'submit') {
-        e.preventDefault();
-    }
+  if (e.type === 'submit') {
+    e.preventDefault();
+  }
 
-    console.log(e.target.value);
-    title.innerText = e.target.value;
+  console.log(e.target.value);
+  title.innerText = e.target.value;
 }
