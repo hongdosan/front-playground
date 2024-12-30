@@ -1,19 +1,29 @@
 {
-  "compilerOptions": {
-    "rootDir": "./src",           // 소스 파일 안에서 루트 폴더를 명시
-    "outDir": "./build/js",       // TS 컴파일 후에 어느 경로로 들어 가는지 명시
-    "target": "ES2015",           // TS를 어떤 버전의 JS로 변환할 지 명시
-    "noEmitOnError": true,        // 파일에 에러가 있을 경우 컴파일 여부 옵션 (default=false; 에러가 있어도 컴파일)
-    "module": "ESNext",           // 컴파일 후 JS가 사용하는 모듈 시스템
+  "compilerOptions": {              // 컴파일러 옵션 지정
+    "rootDir": "./src",             // 소스 파일 안에서 루트 폴더를 명시
+    "outDir": "./build/js",         // TS 컴파일 후에 어느 경로로 들어 가는지 명시
+    "target": "ES2015",             // TS를 어떤 버전의 JS로 변환할 지 명시
+    "noEmitOnError": true,          // 파일에 에러가 있을 경우 컴파일 여부 옵션 (default=false; 에러가 있어도 컴파일)
+    "module": "ESNext",             // 컴파일 후 JS가 사용하는 모듈 시스템
     "moduleResolution": "Node",
-    "esModuleInterop": true,      // ESM(ES Module), CommonJS 호환 사용 가능 여부
-    "lib": ["ESNext", "DOM"],     // 컴파일 과정에서 사용하는 라이브러리 지정
-    "strict": true,               // TS 파일에 타입 엄격 여부
+    "esModuleInterop": true,        // ESM(ES Module), CommonJS 호환 사용 가능 여부
+    "lib": ["ESNext", "DOM"],       // 컴파일 과정에서 사용하는 라이브러리 지정
+    "strict": true                  // TS 파일에 타입 엄격 여부
   },
-  "include": [
-    "./src/**/*.ts"               // 소스 파일의 어디에 TS 파일을 찾을 수 있는지 명시
+  "files": [                        // 컴파일할 개별 파일 목록 (확장자 이름 필수)
+    "node_modules/library/index.ts"
   ],
-  "exclude": [
-    "node_modules"                // 컴파일 시 제외할 목록
-  ]
+  "include": [                      // 컴파일러를 이용해 변환할 폴더 지정, 즉 소스 파일의 어디에 TS 파일을 찾을 수 있는지 명시
+    "./src/**/*.ts"
+  ],
+  "exclude": [                      // 컴파일러를 이용해 변환하지 않을 폴더 경로 지정, 즉 컴파일 시 제외할 목록 명시
+    "node_modules",
+    "dist"
+  ],
+  "extends": ""                     // 상속해서 사용할 다른 TS 구성파일 지정
 }
+
+
+
+
+

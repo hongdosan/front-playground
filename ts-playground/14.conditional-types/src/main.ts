@@ -1,23 +1,21 @@
-
 // type SomeType = T extends U ? X : Y;
-
-// type SomeType = number;
+// type SomeTypeNum = number;
 // type ConditionalType = SomeType extends string ? string : null;
 
-// function fn1<T>(value: T) {
-//     const fn2 = (
-//         arg: T extends boolean ? 'A' : 'B'
-//     ) => {};
-//     return fn2;
-// }
+function fn<T>(value: T) {
+  return (
+    arg: T extends boolean ? 'A' : 'B'
+  ) => {
+  };
+}
 
-// const result = fn1(true);
+const resultStr = fn('');   // B
+const resultBoo = fn(true); // A
 
-// type StringOrNot<T> = T extends string ? string : never;
-
-// type AUnion = string | boolean | never;
-
-// const A: StringOrNot<number> = 'string';
+type StringOrNot<T> = T extends string ? string : never;  // never: 어떠한 값도 가지지 않는 타입
+type AUnion = string | boolean | never;                   // 즉, 이는 string | boolean 타입만 들어가게 됨.
+const A: StringOrNot<string> = 'string';                  // A = string
+// const B: StringOrNot<number> = 'string'; -> Error         // B = never
 
 // type Exclude<T, U> = T extends U ? never : T;
 // type ResultType = Exclude<'a' | 'b' | 'c', 'a' | 'b'>;
