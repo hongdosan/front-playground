@@ -8,7 +8,9 @@ export default class App extends Component {
         return (
             <div className="container">
                 <div className="todoBlock">
-                    Hello.
+                    <div className="title">
+                        <h1>To do list.</h1>
+                    </div>
                 </div>
             </div>
         )
