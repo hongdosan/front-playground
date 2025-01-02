@@ -20,7 +20,6 @@ import "./App.css";
  * - 또한 export는 내보낸 이름과 동일한 이름으로 가져와야 하며, 이름 변경 시 as 키워드 필요.
  */
 export default class App extends Component {
-    // todo button style
     btnStyle = {
         color: "#fff",
         border: "none",
@@ -30,21 +29,6 @@ export default class App extends Component {
         float: "right"
     }
 
-    // todo Data
-    todoData = [
-        {
-            id: "1",
-            title: "react study",
-            completed: true
-        },
-        {
-            id: "2",
-            title: "home clean",
-            completed: false
-        }
-    ]
-
-    // todo list style
     getStyle = () => {
         return {
             padding: "10px",
@@ -53,11 +37,33 @@ export default class App extends Component {
         }
     }
 
+    /**
+     * 리액트에서 데이터가 변할 때 화면을 렌더링 해주기 위해선 React State를 사용해야 함.
+     * 이는 컴포넌트의 렌더링 결과물에 영향을 주는 데이터를 갖고 있는 객체임.
+     * 예를 들어, State가 변경되면 컴포넌트는 Re-Rendering 됨. 이때 State는 컴포넌트 안에서 관리됨.
+     */
+    state = {
+        todoData: [
+            {
+                id: "1",
+                title: "react study",
+                completed: true
+            },
+            {
+                id: "2",
+                title: "home clean",
+                completed: false
+            }
+        ]
+    }
+
     handleClick = (id) => {
-        let newTodoData = this.todoData
+        let newTodoData = this.state
+            .todoData
             .filter(data => data.id !== id) // filter에 해당하는 조건이 true일 경우 데이터 반환
 
         console.log('newTodoData:', newTodoData);
+        this.setState({todoData: newTodoData});
     }
 
     // 함수형 컴포넌트는 없어도 되지만 클래스 컴포넌트애서는 render()를 사용해서 JSX를 반환해야 하기 때문에 render() 사용
@@ -71,20 +77,22 @@ export default class App extends Component {
 
                     {
                         /* map() 메서드는 배열 내의 모든 요소 각각에 대해 주어진 함수를 호출한 결과를 모아 새로운 배열 반환 */
-                        this.todoData.map((data) => (
-                            /**
-                             * 키 속성을 넣지 않으면 다음과 같은 에러 발생: Warning: Each child in an array or iterator should have a unique "key" prop
-                             * 이로 인해, 리액트에서 요소의 리스트를 나열할 때는 Key를 넣어야 함.
-                             * key 속성: 키는 React가 변경, 추가 또는 제거된 항목을 식별하는 데 도움이 됨. 즉 요소에 안정적인 ID를 부여하려면 배열 내부의 요소에 키를 제공해야 함.
-                             * 예를 들어, 리액트는 virtual dom을 이용해 바뀐 부분만 적용된다고 했는데, 이 키 속성을 이용해서 변경된 부분을 찾을 수 있음.
-                             * 이 키는 유니크한 값을 넣어줘야 하는데, 인덱스는 권장하지 않음. (추가, 삭제, 변경 시 키들도 바뀌기 때문)
-                             */
-                            <div style={this.getStyle()} key={data.id}>
-                                <input type="checkbox" defaultChecked={false}/>
-                                {data.title /* 실제 데이터가 들어가기 위해 중괄호로 감싸야 함. */}
-                                <button style={this.btnStyle} onClick={() => this.handleClick(data.id)}>x</button>
-                            </div>
-                        ))
+                        this.state
+                            .todoData
+                            .map((data) => (
+                                /**
+                                 * 키 속성을 넣지 않으면 다음과 같은 에러 발생: Warning: Each child in an array or iterator should have a unique "key" prop
+                                 * 이로 인해, 리액트에서 요소의 리스트를 나열할 때는 Key를 넣어야 함.
+                                 * key 속성: 키는 React가 변경, 추가 또는 제거된 항목을 식별하는 데 도움이 됨. 즉 요소에 안정적인 ID를 부여하려면 배열 내부의 요소에 키를 제공해야 함.
+                                 * 예를 들어, 리액트는 virtual dom을 이용해 바뀐 부분만 적용된다고 했는데, 이 키 속성을 이용해서 변경된 부분을 찾을 수 있음.
+                                 * 이 키는 유니크한 값을 넣어줘야 하는데, 인덱스는 권장하지 않음. (추가, 삭제, 변경 시 키들도 바뀌기 때문)
+                                 */
+                                <div style={this.getStyle()} key={data.id}>
+                                    <input type="checkbox" defaultChecked={false}/>
+                                    {data.title /* 실제 데이터가 들어가기 위해 중괄호로 감싸야 함. */}
+                                    <button style={this.btnStyle} onClick={() => this.handleClick(data.id)}>x</button>
+                                </div>
+                            ))
                     }
                 </div>
             </div>
