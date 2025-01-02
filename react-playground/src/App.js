@@ -35,18 +35,7 @@ export default class App extends Component {
      * 예를 들어, State가 변경되면 컴포넌트는 Re-Rendering 됨. 이때 State는 컴포넌트 안에서 관리됨.
      */
     state = {
-        todoData: [
-            {
-                id: "1",
-                title: "react study",
-                completed: true
-            },
-            {
-                id: "2",
-                title: "home clean",
-                completed: false
-            }
-        ],
+        todoData: [],
         value: ""
     }
 
@@ -88,6 +77,8 @@ export default class App extends Component {
                         />
                     </form>
 
+                    <br/>
+
                     {
                         /* map() 메서드는 배열 내의 모든 요소 각각에 대해 주어진 함수를 호출한 결과를 모아 새로운 배열 반환 */
                         this.state
@@ -100,10 +91,19 @@ export default class App extends Component {
                                  * 예를 들어, 리액트는 virtual dom을 이용해 바뀐 부분만 적용된다고 했는데, 이 키 속성을 이용해서 변경된 부분을 찾을 수 있음.
                                  * 이 키는 유니크한 값을 넣어줘야 하는데, 인덱스는 권장하지 않음. (추가, 삭제, 변경 시 키들도 바뀌기 때문)
                                  */
-                                <div style={this.getStyle()} key={data.id}>
-                                    <input type="checkbox" defaultChecked={false}/>
+                                <div style={this.getTodoStyle(data.completed)} key={data.id}>
+                                    <input
+                                        type="checkbox"
+                                        defaultChecked={false}
+                                        onChange={() => this.handleCompletedChange(data.id)}
+                                    />
                                     {data.title /* 실제 데이터가 들어가기 위해 중괄호로 감싸야 함. */}
-                                    <button style={this.btnStyle} onClick={() => this.handleClick(data.id)}>x</button>
+                                    <button
+                                        style={this.btnStyle}
+                                        onClick={() => this.handleClick(data.id)}
+                                    >
+                                        x
+                                    </button>
                                 </div>
                             ))
                     }
@@ -113,7 +113,7 @@ export default class App extends Component {
     }
 
     /**
-     * 일반 함수 메서드 정의 방식인 getStyle() { ... } 방식과 하기 방식인 화살표 함수 메서드 정의 방식의 차이점
+     * 일반 함수 메서드 정의 방식인 getTodoStyle() { ... } 방식과 하기 방식인 화살표 함수 메서드 정의 방식의 차이점
      * - 일반 함수 메서드 정의 방식은 React 클래스 컴포넌트의 메서드가 기본적으로 this와 자동으로 바인딩되지 않음.
      * - 따라서 일반 함수 메서드 정의 방식으로 메서드를 이벤트 핸들러로 사용할 경우, this가 올바르게 바인딩되지 않을 수 있음.
      * - 반면 화살표 함수 메서드 정의 방식은 자신만의 this를 가지지 않고, 상위 스코프의 this를 그대로 사용.
@@ -126,19 +126,18 @@ export default class App extends Component {
      * - 최신 React 권장 사항: 클래스 컴포넌트를 사용하는 경우에는 화살표 함수가 더 현대적인 패턴으로 간주.
      * - 다만 최신 React에서는 함수형 컴포넌트와 useState, useEffect 같은 훅(Hooks)을 더 권장하긴 함.
      */
-    getStyle = () => {
+    getTodoStyle = (completed) => {
         return {
             padding: "10px",
             borderBottom: "1px #ccc dotted", // 속성의 하단 테두리 설정: 테두리 두깨, 색상, 점선 테두리
-            textDecoration: "none" // 텍스트에 적용된 장식(점선, 취소선) 제어: 기본 장식 제거
+            textDecoration: completed ? "line-through" : "none" // 텍스트 중앙에 가로선을 그림
         }
     }
 
     handleClick = (id) => {
-        // filter에 해당하는 조건이 true일 경우 데이터 반환
         let newTodoData = this.state
             .todoData
-            .filter(data => data.id !== id)
+            .filter(data => data.id !== id) // filter에 해당하는 조건이 true일 경우 데이터 반환
         this.setState({todoData: newTodoData});
     }
 
@@ -147,8 +146,7 @@ export default class App extends Component {
     }
 
     handleSubmit = (e) => {
-        // form 안에 input 값을 전송할 때 페이지가 리로드 되는 것을 막음
-        e.preventDefault();
+        e.preventDefault(); // form 안에 input 값을 전송할 때 페이지가 리로드 되는 것을 막음
 
         let newTodo = {
             id: Date.now(),
@@ -166,5 +164,19 @@ export default class App extends Component {
             todoData: [...this.state.todoData, newTodo],
             value: ""
         });
+    }
+
+    handleCompletedChange = (id) => {
+        let newTodoData = this.state
+            .todoData
+            .map(data => {
+                if (data.id === id) {
+                    data.completed = !data.completed;
+                }
+
+                return data;
+            });
+
+        this.setState({todoData: newTodoData});
     }
 }
