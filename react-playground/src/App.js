@@ -29,14 +29,6 @@ export default class App extends Component {
         float: "right"
     }
 
-    getStyle = () => {
-        return {
-            padding: "10px",
-            borderBottom: "1px #ccc dotted", // 속성의 하단 테두리 설정: 테두리 두깨, 색상, 점선 테두리
-            textDecoration: "none" // 텍스트에 적용된 장식(점선, 취소선) 제어: 기본 장식 제거
-        }
-    }
-
     /**
      * 리액트에서 데이터가 변할 때 화면을 렌더링 해주기 위해선 React State를 사용해야 함.
      * 이는 컴포넌트의 렌더링 결과물에 영향을 주는 데이터를 갖고 있는 객체임.
@@ -54,26 +46,47 @@ export default class App extends Component {
                 title: "home clean",
                 completed: false
             }
-        ]
-    }
-
-    handleClick = (id) => {
-        let newTodoData = this.state
-            .todoData
-            .filter(data => data.id !== id) // filter에 해당하는 조건이 true일 경우 데이터 반환
-
-        console.log('newTodoData:', newTodoData);
-        this.setState({todoData: newTodoData});
+        ],
+        value: ""
     }
 
     // 함수형 컴포넌트는 없어도 되지만 클래스 컴포넌트애서는 render()를 사용해서 JSX를 반환해야 하기 때문에 render() 사용
-    render() {
+    render = () => {
         return (
+            // JSX는 컴포넌트에 여러 엘리먼트 요소가 있다면 반드시 부모 요소 하나로 감싸줘야 하기 때문에, container div 요소로 감쌈
             <div className="container">
                 <div className="todoBlock">
                     <div className="title">
                         <h1>To do list</h1>
                     </div>
+
+                    {/**
+                     * style
+                     * - 첫 번째 중괄호는 JSX 문법에서 JavaScript 표현식을 전달하기 위해 필요
+                     * - 두 번째 중괄호는 전달할 JavaScript 객체를 정의하기 위해 필요
+                     *
+                     * flex
+                     * - CSS의 Flexbox 레이아웃에서 사용되는 단축 속성으로, 플렉스 아이템(flex item)의 크기를 설정하는 데 사용
+                     * - 이는 부모 요소가 Flexbox 컨테이너이고, 자식 요소에 flex 스타일을 적용됨.
+                     * - 예를 들어, 부모 컨테이너의 남는 공간을 균등하게 나눠 차지함.
+                     * - 만약, 부족한 공간이 발생하면 다른 플렉스 아이템과 함께 크기를 줄이는 동작을 함.
+                     */}
+                    <form style={{display: 'flex'}} onSubmit={this.handleSubmit}>
+                        <input
+                            type="text"
+                            name="value"
+                            value={this.state.value}
+                            placeholder="Enter to-do task."
+                            style={{flex: "10", padding: "5px"}}
+                            onChange={this.handleChange}
+                        />
+                        <input
+                            type="submit"
+                            value="ENTER"
+                            className="btnStyle"
+                            style={{flex: "1"}}
+                        />
+                    </form>
 
                     {
                         /* map() 메서드는 배열 내의 모든 요소 각각에 대해 주어진 함수를 호출한 결과를 모아 새로운 배열 반환 */
@@ -96,6 +109,62 @@ export default class App extends Component {
                     }
                 </div>
             </div>
-        )
+        );
+    }
+
+    /**
+     * 일반 함수 메서드 정의 방식인 getStyle() { ... } 방식과 하기 방식인 화살표 함수 메서드 정의 방식의 차이점
+     * - 일반 함수 메서드 정의 방식은 React 클래스 컴포넌트의 메서드가 기본적으로 this와 자동으로 바인딩되지 않음.
+     * - 따라서 일반 함수 메서드 정의 방식으로 메서드를 이벤트 핸들러로 사용할 경우, this가 올바르게 바인딩되지 않을 수 있음.
+     * - 반면 화살표 함수 메서드 정의 방식은 자신만의 this를 가지지 않고, 상위 스코프의 this를 그대로 사용.
+     * - 즉, 자동으로 올바른 this가 바인딩되므로, 명시적으로 바인딩할 필요가 없음.
+     *
+     * 화살표 함수 메서드 정의 방식 권장 이유
+     * - 자동 this binding: 상위 스코프의 this를 자동으로 바인딩. 따라서 bind를 사용하거나 constructor에서 추가적인 작업을 할 필요가 없음.
+     * - 가독성: 코드가 더 간결하며, 클래스 필드 선언 형태로 작성되어 가독성이 높음.
+     * - 일관성: 여러 이벤트 핸들러를 정의할 때, 모두 동일한 방식으로 작성하면 유지보수가 쉬움.
+     * - 최신 React 권장 사항: 클래스 컴포넌트를 사용하는 경우에는 화살표 함수가 더 현대적인 패턴으로 간주.
+     * - 다만 최신 React에서는 함수형 컴포넌트와 useState, useEffect 같은 훅(Hooks)을 더 권장하긴 함.
+     */
+    getStyle = () => {
+        return {
+            padding: "10px",
+            borderBottom: "1px #ccc dotted", // 속성의 하단 테두리 설정: 테두리 두깨, 색상, 점선 테두리
+            textDecoration: "none" // 텍스트에 적용된 장식(점선, 취소선) 제어: 기본 장식 제거
+        }
+    }
+
+    handleClick = (id) => {
+        // filter에 해당하는 조건이 true일 경우 데이터 반환
+        let newTodoData = this.state
+            .todoData
+            .filter(data => data.id !== id)
+        this.setState({todoData: newTodoData});
+    }
+
+    handleChange = (e) => {
+        this.setState({value: e.target.value})
+    }
+
+    handleSubmit = (e) => {
+        // form 안에 input 값을 전송할 때 페이지가 리로드 되는 것을 막음
+        e.preventDefault();
+
+        let newTodo = {
+            id: Date.now(),
+            title: this.state.value,
+            completed: false
+        };
+
+        /**
+         * 전개 연산자(...)
+         * - React 상태 관리에서 새로운 배열/객체를 생성하여 기존 데이터를 수정하지 않고 새로운 값을 추가하거나 병합하는 데 사용
+         * - 이는 불변성을 유지하며 코드의 가독성과 안전성을 높이는 데 유용.
+         * - 따라서 하기 코드는 기존에 있는 할 일 목록에 새로운 할 일 추가하고 입력란에 있던 글씨를 지우는 행위를 함.
+         */
+        this.setState({
+            todoData: [...this.state.todoData, newTodo],
+            value: ""
+        });
     }
 }
