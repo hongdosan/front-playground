@@ -22,9 +22,9 @@ export default function App() {
     }
 
     return (
-        <div className="container">
-            <div className="todoBlock">
-                <div className="title">
+        <div>
+            <div>
+                <div>
                     <h1>To do list</h1>
                 </div>
 
