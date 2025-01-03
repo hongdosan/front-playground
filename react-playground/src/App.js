@@ -8,7 +8,8 @@ export default function App() {
     const [todoData, setTodoData] = useState([]);
     const [value, setValue] = useState("");
 
-    btnStyle = {
+    // btnStyle -> const btnStyle
+    const btnStyle = {
         color: "#fff",
         border: "none",
         padding: "4px 7px",
@@ -17,7 +18,53 @@ export default function App() {
         float: "right"
     }
 
-    // render 제거
+    // getTodoStyle = (completed) => {...}) -> const getTodoStyle = (completed) => {...})
+    const getTodoStyle = (completed) => {
+        return {
+            padding: "10px",
+            borderBottom: "1px #ccc dotted",
+            textDecoration: completed ? "line-through" : "none"
+        }
+    }
+
+    const handleClick = (id) => {
+        let newTodoData = todoData.filter(data => data.id !== id) // this.state.todoData -> todoData
+        setTodoData(newTodoData); // this.setState({todoData: newTodoData}) -> setTodoData(newTodoData)
+    }
+
+    const handleChange = (e) => {
+        setValue(e.target.value) // this.setState({value: e.target.value}) -> setValue(e.target.value)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        let newTodo = {
+            id: Date.now(),
+            title: value,
+            completed: false
+        };
+
+        // this.setState({todoData: [...todoData, newTodo], value: ""});
+        // -> setTodoData(prevState => [...prevState, newTodo]);
+        // -> setValue("");
+        setTodoData(prevState => [...prevState, newTodo]);
+        setValue("");
+    }
+
+    const handleCompletedChange = (id) => {
+        let newTodoData = todoData.map(data => {
+            if (data.id === id) {
+                data.completed = !data.completed;
+            }
+
+            return data;
+        });
+
+        setTodoData({todoData: newTodoData});
+    }
+
+    // render remove
     return (
         <div className="container">
             <div className="todoBlock">
@@ -25,14 +72,15 @@ export default function App() {
                     <h1>To do list</h1>
                 </div>
 
-                <form style={{display: 'flex'}} onSubmit={this.handleSubmit}>
+                {/*this.handleSubmit -> handleSubmit*/}
+                <form style={{display: 'flex'}} onSubmit={handleSubmit}>
                     <input
                         type="text"
                         name="value"
                         value={value}
                         placeholder="Enter to-do task."
                         style={{flex: "10", padding: "5px"}}
-                        onChange={this.handleChange}
+                        onChange={handleChange}
                     />
                     <input
                         type="submit"
@@ -46,16 +94,16 @@ export default function App() {
 
                 {
                     todoData.map((data) => (
-                        <div style={this.getTodoStyle(data.completed)} key={data.id}>
+                        <div style={getTodoStyle(data.completed)} key={data.id}>
                             <input
                                 type="checkbox"
                                 defaultChecked={false}
-                                onChange={() => this.handleCompletedChange(data.id)}
+                                onChange={() => handleCompletedChange(data.id)}
                             />
                             {data.title}
                             <button
-                                style={this.btnStyle}
-                                onClick={() => this.handleClick(data.id)}
+                                style={btnStyle}
+                                onClick={() => handleClick(data.id)}
                             >
                                 x
                             </button>
@@ -65,47 +113,4 @@ export default function App() {
             </div>
         </div>
     );
-
-    getTodoStyle = (completed) => {
-        return {
-            padding: "10px",
-            borderBottom: "1px #ccc dotted", // 속성의 하단 테두리 설정: 테두리 두깨, 색상, 점선 테두리
-            textDecoration: completed ? "line-through" : "none" // 텍스트 중앙에 가로선을 그림
-        }
-    }
-
-    handleClick = (id) => {
-        let newTodoData = todoData.filter(data => data.id !== id) // this.state.todoData
-        setTodoData(newTodoData); // this.setState({todoData: newTodoData})
-    }
-
-    handleChange = (e) => {
-        setValue(e.target.value) // this.setState({value: e.target.value})
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault(); // form 안에 input 값을 전송할 때 페이지가 리로드 되는 것을 막음
-
-        let newTodo = {
-            id: Date.now(),
-            title: value,
-            completed: false
-        };
-
-        // this.setState({todoData: [...todoData, newTodo], value: ""});
-        setTodoData(prevState => [...prevState, newTodo]);
-        setValue("");
-    }
-
-    handleCompletedChange = (id) => {
-        let newTodoData = todoData.map(data => {
-            if (data.id === id) {
-                data.completed = !data.completed;
-            }
-
-            return data;
-        });
-
-        setTodoData({todoData: newTodoData});
-    }
 }
