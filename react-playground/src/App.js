@@ -61,7 +61,7 @@ export default function App() {
             return data;
         });
 
-        setTodoData({todoData: newTodoData});
+        setTodoData(newTodoData);
     }
 
     // render remove
